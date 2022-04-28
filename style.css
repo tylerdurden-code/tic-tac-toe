@@ -1,0 +1,47 @@
+*,*::before,*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container {
+    display: grid;
+    grid-template-columns: 120px 120px 120px;
+    width: max-content;
+}
+
+.box {
+    height: 120px;
+    width: 120px;
+    border: 5px solid black;
+}
+.all {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    gap: 100px;
+}
+.box1,.box4,.box7 {
+    border-left: none;
+}
+
+.box1,.box2,.box3 {
+    border-top: none;
+}
+
+.box3,.box6,.box9 {
+    border-right: none;
+}
+
+.box7, .box8, .box9 {
+    border-bottom: none;
+}
+
+#title {
+    margin-top: -160px;
+}
+
+.box:hover {
+    background-color: lightyellow;
+}
