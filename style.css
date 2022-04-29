@@ -45,3 +45,37 @@
 .box:hover {
     background-color: lightyellow;
 }
+
+#startGame {
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#startGame:hover {
+    padding: 16px;
+    font-size: 25px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#githubpng {
+    height: 50px;
+    width: 50px;
+}
+
+#githubpng:hover {
+    height: 60px;
+    width: 60px;
+}
