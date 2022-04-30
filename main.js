@@ -17,7 +17,8 @@ const Game = {
         startGameBtn.setAttribute('id','startGame')
         startGameBtn.innerHTML = 'Start Game';
         startGameBtn.addEventListener('click', () => {
-            this.start()
+            this.playerCreation();
+            this.removeBtn();
         })
         this.all.insertBefore(startGameBtn, this.all.children[1]);
     },
@@ -36,12 +37,43 @@ const Game = {
     playerCreation: function() {
         const playerCre = document.createElement('div');
         playerCre.setAttribute('class','playerCreation');
+
         const title = document.createElement('h2');
         title.innerHTML = "Choose a Name..."
         playerCre.appendChild(title);
+
         const profiles = document.createElement('div')
         profiles.setAttribute('class','profiles');
         playerCre.appendChild(profiles);
+
+        const player1 = document.createElement('div');
+        player1.setAttribute('class','pics player1')
+        profiles.appendChild(player1)
+
+        const img1 = document.createElement('img')
+        img1.setAttribute('src',"img/tylerdurdenpic.png")
+        img1.setAttribute('id','tylerDurdenPic')
+        player1.appendChild(img1)
+
+        const input1 = document.createElement('input')
+        input1.setAttribute('type','text')
+        input1.setAttribute('placeholder','Nickname')
+        player1.appendChild(input1);
+
+        const player2 = document.createElement('div')
+        player2.setAttribute('class','pics player2')
+        profiles.appendChild(player2)
+
+        const img2 = document.createElement('img')
+        img2.setAttribute('src',"img/thenarratorpic.jpg")
+        img2.setAttribute('id','theNarratorPic')
+        player2.appendChild(img2)
+
+        const input2 = document.createElement('input')
+        input2.setAttribute('type','text')
+        input2.setAttribute('placeholder','Nickname')
+        player2.appendChild(input2);
+
         const button = document.createElement('button');
         button.setAttribute('id','submitBtn');
         button.innerHTML = 'Start'
@@ -58,6 +90,6 @@ const Game = {
 
 
 
-// Game.startingPage()
+Game.startingPage()
 // Game.ticTacToeSetup()
-Game.playerCreation();
+// Game.playerCreation();
