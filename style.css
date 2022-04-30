@@ -79,3 +79,51 @@
     height: 60px;
     width: 60px;
 }
+
+#tylerDurdenPic,#theNarratorPic {
+    height: 200px;
+    width: 240px;
+    box-shadow: 5px 5px;
+}
+
+.profiles {
+    display: flex;
+    gap: 10px;
+}
+
+.pics {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pics > input {
+    border-radius: 10px;
+    border: 3px solid black;
+    padding: 7px;
+}
+.pics > input:focus {
+    border: 4px solid red;
+
+}
+
+#submitBtn {
+    height: 50px;
+    width: 100px;
+    border: 5px solid black;
+    background-color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: ease-in-out .1s;
+}
+#submitBtn:hover {
+    height: 50px;
+    width: 120px;
+    border: 5px solid red;
+}
+.playerCreation {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}

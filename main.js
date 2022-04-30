@@ -34,13 +34,30 @@ const Game = {
         // this.playerCreation();
     },
     playerCreation: function() {
+        const playerCre = document.createElement('div');
+        playerCre.setAttribute('class','playerCreation');
+        const title = document.createElement('h2');
+        title.innerHTML = "Choose a Name..."
+        playerCre.appendChild(title);
+        const profiles = document.createElement('div')
+        profiles.setAttribute('class','profiles');
+        playerCre.appendChild(profiles);
+        const button = document.createElement('button');
+        button.setAttribute('id','submitBtn');
+        button.innerHTML = 'Start'
+        playerCre.appendChild(button);
+        this.all.insertBefore(playerCre,this.all.children[1]);
     },    
 }
 
-var btn = document.querySelector('#startGame')
+// var btn = document.querySelector('#submitBtn')
+
+// btn.addEventListener('click',() => {
+//     console.log("Negros tou Moria")
+// })
 
 
 
 // Game.startingPage()
 // Game.ticTacToeSetup()
-
+Game.playerCreation();
