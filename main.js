@@ -1,13 +1,30 @@
 const Game = {
     all:document.querySelector('.all'),
-    ticTacToeSetup: function() {
+    ticTacToeSetup: function(playerOneName,playerTwoName) {
         var arr = ['A1','B1','C1','A2','B2','C2','A3','B3','C3']
+        var turnMessage = document.createElement('h2');
+        turnMessage.innerHTML = `${playerOneName}'s turn to play`
+        this.all.insertBefore(turnMessage,this.all.children[1])
         var container = document.createElement('div');
         container.setAttribute('class','container');
-        this.all.insertBefore(container,this.all.children[1]);
+        this.all.insertBefore(container,this.all.children[2]);
         for (let i =0; i < 9;i++) {
             var box = document.createElement('div')
             box.setAttribute('class',`box box${i + 1}`)
+            var mark = 'O';
+            box.addEventListener('click',() => {
+                console.log(this.innerHTML) 
+                if (mark === 'O') {
+                    console.log('X')
+                    turnMessage.innerHTML = `${playerTwoName}'s turn to play`
+                    mark = 'X'
+                }
+                else {
+                    console.log('O')
+                    turnMessage.innerHTML = `${playerOneName}'s turn to play`
+                    mark = 'O'
+                }
+            })
             container.appendChild(box)
             box.innerHTML = arr[i]
         }
@@ -24,6 +41,10 @@ const Game = {
     },
     startingPage: function() {
         this.buttonSetup();
+    },
+    removePlayerCreation: function() {
+        var bigDiv = document.querySelector('.playerCreation');
+        bigDiv.remove();
     },
     removeBtn: function() {
         var btn = document.querySelector('#startGame');
@@ -58,6 +79,8 @@ const Game = {
         const input1 = document.createElement('input')
         input1.setAttribute('type','text')
         input1.setAttribute('placeholder','Nickname')
+        input1.setAttribute('id','player1')
+        input1.setAttribute('value','PlayerOne')
         player1.appendChild(input1);
 
         const player2 = document.createElement('div')
@@ -72,11 +95,20 @@ const Game = {
         const input2 = document.createElement('input')
         input2.setAttribute('type','text')
         input2.setAttribute('placeholder','Nickname')
+        input2.setAttribute('id','player2')
+        input2.setAttribute('value','PlayerTwo')
         player2.appendChild(input2);
 
         const button = document.createElement('button');
         button.setAttribute('id','submitBtn');
         button.innerHTML = 'Start'
+        button.addEventListener('click',() => {
+            var inputValue1 = document.querySelector('#player1').value;
+            var inputValue2 = document.querySelector('#player2').value;
+            // console.log(inputValue1,inputValue2);
+            this.ticTacToeSetup(inputValue1,inputValue2);
+            this.removePlayerCreation();
+        })
         playerCre.appendChild(button);
         this.all.insertBefore(playerCre,this.all.children[1]);
     },    
