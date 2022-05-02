@@ -1,6 +1,18 @@
 const Game = {
     all:document.querySelector('.all'),
     ticTacToeSetup: function(playerOneName,playerTwoName) {
+        const Gameboard = {
+            'box box1':false,
+            'box box2':false,
+            'box box3':false,
+            'box box4':false,
+            'box box5':false,
+            'box box6':false,
+            'box box7':false,
+            'box box8':false,
+            'box box9':false,
+
+        }
         var arr = ['A1','B1','C1','A2','B2','C2','A3','B3','C3']
         var turnMessage = document.createElement('h2');
         turnMessage.innerHTML = `${playerOneName}'s turn to play`
@@ -9,25 +21,47 @@ const Game = {
         container.setAttribute('class','container');
         this.all.insertBefore(container,this.all.children[2]);
         for (let i =0; i < 9;i++) {
-            var box = document.createElement('div')
+            let box = document.createElement('div')
             box.setAttribute('class',`box box${i + 1}`)
+            box.setAttribute('data-init',`${i}`)
             var mark = 'O';
             box.addEventListener('click',() => {
-                console.log(this.innerHTML) 
                 if (mark === 'O') {
-                    console.log('X')
+                    if (Gameboard[box.className]) {
+                        return
+                    }
+                    let pic = document.createElement('img');
+                    pic.setAttribute('src','img/tylerdurdenpic.png')
+                    pic.setAttribute('id','boxPic1');
+                    box.appendChild(pic)
+                    Gameboard[box.className] = true;
+                    // box.innerHTML = "X"
                     turnMessage.innerHTML = `${playerTwoName}'s turn to play`
                     mark = 'X'
                 }
                 else {
-                    console.log('O')
+                    if (Gameboard[box.className]) {
+                        return
+                    }
+                    let pic = document.createElement('img');
+                    pic.setAttribute('src','img/thenarratorpic.jpg')
+                    pic.setAttribute('id','boxPic2');
+                    box.appendChild(pic)
+                    Gameboard[box.className] = true;
+                    // box.innerHTML = "O"
                     turnMessage.innerHTML = `${playerOneName}'s turn to play`
                     mark = 'O'
                 }
             })
             container.appendChild(box)
-            box.innerHTML = arr[i]
+            // box.innerHTML = arr[i]
         }
+        // for (let i = 0;i < 9;i++) {
+        //     let newBox = document.querySelector(`.box${i + 1}`)
+        //     newBox.addEventListener('click', () => {
+        //         console.log(newBox.innerHTML)
+        //     })
+        // }
     },
     buttonSetup: function() {
         var startGameBtn = document.createElement('button')

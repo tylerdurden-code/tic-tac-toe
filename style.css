@@ -54,6 +54,7 @@
     cursor: pointer;
     font-size: 20px;
     transition: ease-in-out .1s;
+    position:absolute;
 }
 
 #startGame:hover {
@@ -128,4 +129,9 @@
     flex-direction: column;
     gap: 20px;
     align-items: center;
+}
+#boxPic1 , #boxPic2 {
+    position: relative;
+    height:110px;
+    width: 110px
 }
