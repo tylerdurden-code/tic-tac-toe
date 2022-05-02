@@ -13,6 +13,44 @@ const Game = {
             'box box9':false,
 
         }
+        const GameboardMatch = {
+            'box box1':"1",
+            'box box2':"2",
+            'box box3':"3",
+            'box box4':"4",
+            'box box5':"5",
+            'box box6':"6",
+            'box box7':"7",
+            'box box8':"8",
+            'box box9':"9",
+            testWinner: function() {
+                if(this["box box1"] === this["box box2"] && this["box box2"] === this["box box3"]) {
+                    console.log('mad clip forever')
+                }
+                if(this["box box4"] === this["box box5"] && this["box box5"] === this["box box6"]) {
+                    console.log('mad clip forever')
+                }
+                if(this["box box7"] === this["box box8"] && this["box box8"] === this["box box9"]) {
+                    console.log('mad clip forever')
+                }
+                if(this["box box1"] === this["box box4"] && this["box box4"] === this["box box7"]) {
+                    console.log('mad clip forever')
+                }
+                if(this["box box2"] === this["box box5"] && this["box box5"] === this["box box8"]) {
+                    console.log('mad clip forever')
+                }
+                if(this["box box3"] === this["box box6"] && this["box box6"] === this["box box9"]) {
+                    console.log('mad clip forever')
+                }
+                if(this["box box1"] === this["box box5"] && this["box box5"] === this["box box9"]) {
+                    console.log('mad clip forever')
+                }
+                if(this["box box3"] === this["box box5"] && this["box box5"] === this["box box7"]) {
+                    console.log('mad clip forever')
+                }
+            }                       
+            
+        }
         var arr = ['A1','B1','C1','A2','B2','C2','A3','B3','C3']
         var turnMessage = document.createElement('h2');
         turnMessage.innerHTML = `${playerOneName}'s turn to play`
@@ -35,6 +73,7 @@ const Game = {
                     pic.setAttribute('id','boxPic1');
                     box.appendChild(pic)
                     Gameboard[box.className] = true;
+                    GameboardMatch[box.className] = 'tylerDurden'
                     // box.innerHTML = "X"
                     turnMessage.innerHTML = `${playerTwoName}'s turn to play`
                     mark = 'X'
@@ -48,13 +87,12 @@ const Game = {
                     pic.setAttribute('id','boxPic2');
                     box.appendChild(pic)
                     Gameboard[box.className] = true;
+                    GameboardMatch[box.className] = 'theNarrator'
                     // box.innerHTML = "O"
                     turnMessage.innerHTML = `${playerOneName}'s turn to play`
                     mark = 'O'
                 }
-                if (Gameboard['box box1'] && Gameboard['box box2'] && Gameboard['box box3']) {
-                    console.log('whartever')
-                }
+                GameboardMatch.testWinner();
             })
             container.appendChild(box)
             // box.innerHTML = arr[i]
