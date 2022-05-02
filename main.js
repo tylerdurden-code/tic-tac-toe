@@ -52,6 +52,9 @@ const Game = {
                     turnMessage.innerHTML = `${playerOneName}'s turn to play`
                     mark = 'O'
                 }
+                if (Gameboard['box box1'] && Gameboard['box box2'] && Gameboard['box box3']) {
+                    console.log('whartever')
+                }
             })
             container.appendChild(box)
             // box.innerHTML = arr[i]
