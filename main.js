@@ -1,6 +1,7 @@
 const Game = {
     all:document.querySelector('.all'),
-    ticTacToeSetup: function(playerOneName,playerTwoName) {
+    ticTacToeSetup: function(playerOneName,playerTwoName,restart=true) {
+         
         const Gameboard = {
             'box box1':false,
             'box box2':false,
@@ -11,10 +12,15 @@ const Game = {
             'box box7':false,
             'box box8':false,
             'box box9':false,
-
+            pauseGameboard: function() {
+                for (const boxes in this) {
+                    this[boxes] = true;
+                }
+            }
         }
+        
         const GameboardMatch = {
-            'box box1':"1",
+            'box box1':'1',
             'box box2':"2",
             'box box3':"3",
             'box box4':"4",
@@ -23,36 +29,45 @@ const Game = {
             'box box7':"7",
             'box box8':"8",
             'box box9':"9",
-            testWinner: function() {
+            testWinner: function(playerOneName,playerTwoName,name) {
                 if(this["box box1"] === this["box box2"] && this["box box2"] === this["box box3"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);
                 }
                 if(this["box box4"] === this["box box5"] && this["box box5"] === this["box box6"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);                
                 }
                 if(this["box box7"] === this["box box8"] && this["box box8"] === this["box box9"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);
                 }
                 if(this["box box1"] === this["box box4"] && this["box box4"] === this["box box7"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);
                 }
                 if(this["box box2"] === this["box box5"] && this["box box5"] === this["box box8"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);
                 }
                 if(this["box box3"] === this["box box6"] && this["box box6"] === this["box box9"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);
                 }
                 if(this["box box1"] === this["box box5"] && this["box box5"] === this["box box9"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);
                 }
                 if(this["box box3"] === this["box box5"] && this["box box5"] === this["box box7"]) {
-                    console.log('mad clip forever')
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name);
                 }
             }                       
             
         }
         var arr = ['A1','B1','C1','A2','B2','C2','A3','B3','C3']
         var turnMessage = document.createElement('h2');
+        turnMessage.setAttribute('id','turnMessage')
         turnMessage.innerHTML = `${playerOneName}'s turn to play`
         this.all.insertBefore(turnMessage,this.all.children[1])
         var container = document.createElement('div');
@@ -63,37 +78,42 @@ const Game = {
             box.setAttribute('class',`box box${i + 1}`)
             box.setAttribute('data-init',`${i}`)
             var mark = 'O';
-            box.addEventListener('click',() => {
-                if (mark === 'O') {
-                    if (Gameboard[box.className]) {
-                        return
+            if (restart) {
+                box.addEventListener('click',() => {
+                    let lastPlayer = "";
+                    if (mark === 'O') {
+                        if (Gameboard[box.className]) {
+                            return
+                        }
+                        let pic = document.createElement('img');
+                        pic.setAttribute('src','img/tylerdurdenpic.png')
+                        pic.setAttribute('id','boxPic1');
+                        box.appendChild(pic)
+                        Gameboard[box.className] = true;
+                        GameboardMatch[box.className] = 'tylerDurden'
+                        // box.innerHTML = "X"
+                        turnMessage.innerHTML = `${playerTwoName}'s turn to play`
+                        mark = 'X'
+                        lastPlayer = playerOneName;
                     }
-                    let pic = document.createElement('img');
-                    pic.setAttribute('src','img/tylerdurdenpic.png')
-                    pic.setAttribute('id','boxPic1');
-                    box.appendChild(pic)
-                    Gameboard[box.className] = true;
-                    GameboardMatch[box.className] = 'tylerDurden'
-                    // box.innerHTML = "X"
-                    turnMessage.innerHTML = `${playerTwoName}'s turn to play`
-                    mark = 'X'
-                }
-                else {
-                    if (Gameboard[box.className]) {
-                        return
+                    else {
+                        if (Gameboard[box.className]) {
+                            return
+                        }
+                        let pic = document.createElement('img');
+                        pic.setAttribute('src','img/thenarratorpic.jpg')
+                        pic.setAttribute('id','boxPic2');
+                        box.appendChild(pic)
+                        Gameboard[box.className] = true;
+                        GameboardMatch[box.className] = 'theNarrator'
+                        // box.innerHTML = "O"
+                        turnMessage.innerHTML = `${playerOneName}'s turn to play`
+                        mark = 'O'
+                        lastPlayer = playerTwoName;
                     }
-                    let pic = document.createElement('img');
-                    pic.setAttribute('src','img/thenarratorpic.jpg')
-                    pic.setAttribute('id','boxPic2');
-                    box.appendChild(pic)
-                    Gameboard[box.className] = true;
-                    GameboardMatch[box.className] = 'theNarrator'
-                    // box.innerHTML = "O"
-                    turnMessage.innerHTML = `${playerOneName}'s turn to play`
-                    mark = 'O'
-                }
-                GameboardMatch.testWinner();
-            })
+                    GameboardMatch.testWinner(playerOneName,playerTwoName,lastPlayer);
+                })
+            }
             container.appendChild(box)
             // box.innerHTML = arr[i]
         }
@@ -124,6 +144,14 @@ const Game = {
     removeBtn: function() {
         var btn = document.querySelector('#startGame');
         btn.remove();
+    },
+    removeAll: function() {
+        let container = document.querySelector('.container');
+        let message = document.querySelector('#turnMessage')
+        let btns = document.querySelector('.btnContainer')
+        container.remove();
+        message.remove();
+        btns.remove();
     },
     start: function() {
         this.ticTacToeSetup();
@@ -186,7 +214,27 @@ const Game = {
         })
         playerCre.appendChild(button);
         this.all.insertBefore(playerCre,this.all.children[1]);
-    },    
+    },
+    endingScene: function(playerOneName,playerTwoName,name) {
+        var message = document.querySelector('#turnMessage')
+        message.innerHTML = `${name} WON!!!!`
+        var btnContainer = document.createElement('div');
+        btnContainer.setAttribute('class','btnContainer')
+        this.all.insertBefore(btnContainer,this.all.children[3])
+        var restartBtn = document.createElement('button');
+        restartBtn.setAttribute('class','endBtn')
+        restartBtn.innerHTML = 'Restart'
+        restartBtn.addEventListener('click',() => {
+            this.removeAll();
+            this.ticTacToeSetup(playerOneName,playerTwoName);
+        })
+        var startBtn = document.createElement('button');
+        startBtn.setAttribute('class','endBtn')
+        startBtn.innerHTML = 'Main Page';
+        btnContainer.appendChild(restartBtn)
+        btnContainer.appendChild(startBtn)
+
+    }    
 }
 
 // var btn = document.querySelector('#submitBtn')
