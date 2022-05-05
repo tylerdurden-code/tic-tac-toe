@@ -3,21 +3,28 @@ const Game = {
     ticTacToeSetup: function(playerOneName,playerTwoName,restart=true) {
          
         const Gameboard = {
-            'box box1':false,
-            'box box2':false,
-            'box box3':false,
-            'box box4':false,
-            'box box5':false,
-            'box box6':false,
-            'box box7':false,
-            'box box8':false,
-            'box box9':false,
+            Boxes: {
+                'box box1':false,
+                'box box2':false,
+                'box box3':false,
+                'box box4':false,
+                'box box5':false,
+                'box box6':false,
+                'box box7':false,
+                'box box8':false,
+                'box box9':false,
+            },
             pauseGameboard: function() {
-                for (const boxes in this) {
-                    this[boxes] = true;
+                for (let box in this.Boxes) {
+                   this.Boxes[box] = true;
                 }
-            }
+                console.log(this.Boxes)
+            },
+            // checkTruth: function() {
+                
+            // }
         }
+        // Gameboard.checkTruth();
         
         const GameboardMatch = {
             'box box1':'1',
@@ -82,7 +89,7 @@ const Game = {
                 box.addEventListener('click',() => {
                     let lastPlayer = "";
                     if (mark === 'O') {
-                        if (Gameboard[box.className]) {
+                        if (Gameboard.Boxes[box.className]) {
                             return
                         }
                         let pic = document.createElement('img');
@@ -97,7 +104,7 @@ const Game = {
                         lastPlayer = playerOneName;
                     }
                     else {
-                        if (Gameboard[box.className]) {
+                        if (Gameboard.Boxes[box.className]) {
                             return
                         }
                         let pic = document.createElement('img');
