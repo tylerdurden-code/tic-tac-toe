@@ -18,13 +18,22 @@ const Game = {
                 for (let box in this.Boxes) {
                    this.Boxes[box] = true;
                 }
-                console.log(this.Boxes)
+                // console.log(this.Boxes)
             },
-            // checkTruth: function() {
-                
-            // }
+            checkTruth: function() {
+                let z = 0;
+                for (box in this.Boxes) {
+                    if (this.Boxes[box]) {
+                        z++
+                    }
+                }
+                if (z === 9) {
+                    return true
+                }
+                return false
+            }
         }
-        // Gameboard.checkTruth();
+        Gameboard.checkTruth();
         
         const GameboardMatch = {
             'box box1':'1',
@@ -40,34 +49,48 @@ const Game = {
                 if(this["box box1"] === this["box box2"] && this["box box2"] === this["box box3"]) {
                     Gameboard.pauseGameboard();
                     Game.endingScene(playerOneName,playerTwoName,name);
+                    return
                 }
                 if(this["box box4"] === this["box box5"] && this["box box5"] === this["box box6"]) {
                     Gameboard.pauseGameboard();
-                    Game.endingScene(playerOneName,playerTwoName,name);                
+                    Game.endingScene(playerOneName,playerTwoName,name);  
+                    return              
                 }
                 if(this["box box7"] === this["box box8"] && this["box box8"] === this["box box9"]) {
                     Gameboard.pauseGameboard();
                     Game.endingScene(playerOneName,playerTwoName,name);
+                    return
                 }
                 if(this["box box1"] === this["box box4"] && this["box box4"] === this["box box7"]) {
                     Gameboard.pauseGameboard();
                     Game.endingScene(playerOneName,playerTwoName,name);
+                    return
                 }
                 if(this["box box2"] === this["box box5"] && this["box box5"] === this["box box8"]) {
                     Gameboard.pauseGameboard();
                     Game.endingScene(playerOneName,playerTwoName,name);
+                    return
                 }
                 if(this["box box3"] === this["box box6"] && this["box box6"] === this["box box9"]) {
                     Gameboard.pauseGameboard();
                     Game.endingScene(playerOneName,playerTwoName,name);
+                    return
                 }
                 if(this["box box1"] === this["box box5"] && this["box box5"] === this["box box9"]) {
                     Gameboard.pauseGameboard();
                     Game.endingScene(playerOneName,playerTwoName,name);
+                    return
                 }
                 if(this["box box3"] === this["box box5"] && this["box box5"] === this["box box7"]) {
                     Gameboard.pauseGameboard();
                     Game.endingScene(playerOneName,playerTwoName,name);
+                    return
+                }
+                var checkTruth = Gameboard.checkTruth();
+                if (checkTruth) {
+                    Gameboard.pauseGameboard();
+                    Game.endingScene(playerOneName,playerTwoName,name,true);
+                    return
                 }
             }                       
             
@@ -96,7 +119,7 @@ const Game = {
                         pic.setAttribute('src','img/tylerdurdenpic.png')
                         pic.setAttribute('id','boxPic1');
                         box.appendChild(pic)
-                        Gameboard[box.className] = true;
+                        Gameboard.Boxes[box.className] = true;
                         GameboardMatch[box.className] = 'tylerDurden'
                         // box.innerHTML = "X"
                         turnMessage.innerHTML = `${playerTwoName}'s turn to play`
@@ -111,7 +134,7 @@ const Game = {
                         pic.setAttribute('src','img/thenarratorpic.jpg')
                         pic.setAttribute('id','boxPic2');
                         box.appendChild(pic)
-                        Gameboard[box.className] = true;
+                        Gameboard.Boxes[box.className] = true;
                         GameboardMatch[box.className] = 'theNarrator'
                         // box.innerHTML = "O"
                         turnMessage.innerHTML = `${playerOneName}'s turn to play`
@@ -222,9 +245,14 @@ const Game = {
         playerCre.appendChild(button);
         this.all.insertBefore(playerCre,this.all.children[1]);
     },
-    endingScene: function(playerOneName,playerTwoName,name) {
+    endingScene: function(playerOneName,playerTwoName,name,tie=false) {
         var message = document.querySelector('#turnMessage')
-        message.innerHTML = `${name} WON!!!!`
+        if (!(tie)) {
+            message.innerHTML = `${name} WON!!!!`
+        }
+        if (tie) {
+            message.innerHTML = `It's a tie !!!`
+        }
         var btnContainer = document.createElement('div');
         btnContainer.setAttribute('class','btnContainer')
         this.all.insertBefore(btnContainer,this.all.children[3])
@@ -238,6 +266,10 @@ const Game = {
         var startBtn = document.createElement('button');
         startBtn.setAttribute('class','endBtn')
         startBtn.innerHTML = 'Main Page';
+        startBtn.addEventListener('click', () => {
+            this.removeAll();
+            this.startingPage();
+        })
         btnContainer.appendChild(restartBtn)
         btnContainer.appendChild(startBtn)
 
