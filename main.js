@@ -32,9 +32,7 @@ const Game = {
                 }
                 return false
             }
-        }
-        Gameboard.checkTruth();
-        
+        }        
         const GameboardMatch = {
             'box box1':'1',
             'box box2':"2",
