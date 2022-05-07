@@ -1,7 +1,7 @@
 const Game = {
     all:document.querySelector('.all'),
-    ticTacToeSetup: function(playerOneName,playerTwoName,restart=true) {
-         
+    ticTacToeSetup: function(playerOneName,playerTwoName,restart=true,playAgainstAI = false) {
+
         const Gameboard = {
             Boxes: {
                 'box box1':false,
@@ -31,6 +31,13 @@ const Game = {
                     return true
                 }
                 return false
+            },
+            findFalse: function() {
+                for (let box in this.Boxes) {
+                    if (this.Boxes[box] === false) {
+                        return box
+                    }
+                }
             }
         }        
         const GameboardMatch = {
@@ -107,9 +114,44 @@ const Game = {
             box.setAttribute('data-init',`${i}`)
             var mark = 'O';
             if (restart) {
-                box.addEventListener('click',() => {
-                    let lastPlayer = "";
-                    if (mark === 'O') {
+                if (!(playAgainstAI)) {
+                    box.addEventListener('click',() => {
+                        let lastPlayer = "";
+                        if (mark === 'O') {
+                            if (Gameboard.Boxes[box.className]) {
+                                return
+                            }
+                            let pic = document.createElement('img');
+                            pic.setAttribute('src','img/tylerdurdenpic.png')
+                            pic.setAttribute('id','boxPic1');
+                            box.appendChild(pic)
+                            Gameboard.Boxes[box.className] = true;
+                            GameboardMatch[box.className] = 'tylerDurden'
+                            // box.innerHTML = "X"
+                            turnMessage.innerHTML = `${playerTwoName}'s turn to play`
+                            mark = 'X'
+                            lastPlayer = playerOneName;
+                        }
+                        else {
+                            if (Gameboard.Boxes[box.className]) {
+                                return
+                            }
+                            let pic = document.createElement('img');
+                            pic.setAttribute('src','img/thenarratorpic.jpg')
+                            pic.setAttribute('id','boxPic2');
+                            box.appendChild(pic)
+                            Gameboard.Boxes[box.className] = true;
+                            GameboardMatch[box.className] = 'theNarrator'
+                            // box.innerHTML = "O"
+                            turnMessage.innerHTML = `${playerOneName}'s turn to play`
+                            mark = 'O'
+                            lastPlayer = playerTwoName;
+                        }
+                        GameboardMatch.testWinner(playerOneName,playerTwoName,lastPlayer);
+                    })
+                }
+                else {
+                    box.addEventListener('click', () => {
                         if (Gameboard.Boxes[box.className]) {
                             return
                         }
@@ -119,28 +161,20 @@ const Game = {
                         box.appendChild(pic)
                         Gameboard.Boxes[box.className] = true;
                         GameboardMatch[box.className] = 'tylerDurden'
-                        // box.innerHTML = "X"
-                        turnMessage.innerHTML = `${playerTwoName}'s turn to play`
-                        mark = 'X'
-                        lastPlayer = playerOneName;
-                    }
-                    else {
-                        if (Gameboard.Boxes[box.className]) {
-                            return
-                        }
-                        let pic = document.createElement('img');
-                        pic.setAttribute('src','img/thenarratorpic.jpg')
-                        pic.setAttribute('id','boxPic2');
-                        box.appendChild(pic)
-                        Gameboard.Boxes[box.className] = true;
-                        GameboardMatch[box.className] = 'theNarrator'
-                        // box.innerHTML = "O"
-                        turnMessage.innerHTML = `${playerOneName}'s turn to play`
-                        mark = 'O'
-                        lastPlayer = playerTwoName;
-                    }
-                    GameboardMatch.testWinner(playerOneName,playerTwoName,lastPlayer);
-                })
+                        
+                        let num = Gameboard.findFalse()
+                        var box1 = document.querySelector(`.box box2`)
+                        let pic2 = document.createElement('img');
+                        pic2.setAttribute('src','img/thenarratorpic.jpg')
+                        pic2.setAttribute('id','boxPic2');
+                        console.log(box1)
+                        box1.appendChild(pic2)
+                        Gameboard.Boxes[box1.className] = true;
+                        GameboardMatch[box1.className] = 'theNarrator'
+                        console.log(Gameboard.Boxes)
+                        
+                    })
+                }
             }
             container.appendChild(box)
             // box.innerHTML = arr[i]
@@ -151,6 +185,10 @@ const Game = {
         //         console.log(newBox.innerHTML)
         //     })
         // }
+    
+    },
+    triggerClick: function() {
+        box.click();
     },
     buttonSetup: function() {
         var startGameBtn = document.createElement('button')
@@ -185,6 +223,11 @@ const Game = {
         this.ticTacToeSetup();
         this.removeBtn();
         // this.playerCreation();
+    },
+    getRandomInt: function(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
     },
     playerCreation: function() {
         const playerCre = document.createElement('div');
